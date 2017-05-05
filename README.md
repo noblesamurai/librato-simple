@@ -3,23 +3,36 @@
 > Simple metrics posting to librato.
 
 ## Purpose
-- What problem does this module solve? At least a few sentences.
-PLEASE_FILL_IN_HERE
+The existing librato modules do not seem to support tags.  This is a currently
+a minimum viable product implementation of incrementing  metric using gauges
+with custom tags.  (It does no aggregation and makes one
+requests per metric increment). Watch out for costs on your account if you use
+this - repeat it does on request to librato per call.
 
 ## Usage
 
 ```js
-// Several examples of usage.
-// Usually copying and pasting code from the tests and making the code standalone suffices.
-// PLEASE_FILL_IN_HERE
+const increment = require('librato-simple');
+const config = { email: 'me@my.com, token: 'librato_token' };
+increment(config, 'mymetric.awesome', { color: 'blue', machine: 'thing' }).then(function () {
+  // we're done ...
+});
+
 ```
 
 ## API
 
-PLEASE_FILL_IN_HERE
+```js
+/**
+ * @param {Object} config - { email, token }
+ * @param {string} name - the name of your metric
+ * @param {Object} tags - { /* your tags */ }
+ * @resolves {Promise}
+ */
 
-Note: To regenerate this section from the jsdoc run `npm run docs` and paste
-the output above.
+module.exports = increment(config, name, tags).then(function () {
+```
+
 
 ## Installation
 
