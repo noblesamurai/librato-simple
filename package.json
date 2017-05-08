@@ -1,7 +1,7 @@
 {
   "name": "librato-simple",
   "description": "Simple metrics posting to librato.",
-  "version": "1.0.0",
+  "version": "1.0.1-2",
   "author": "Tim Allen <tim@noblesamurai.com>",
   "license": "BSD",
   "main": "index.js",
@@ -24,17 +24,24 @@
     "node": "6.x",
     "npm": "3.x"
   },
-  "dependencies": {},
+  "dependencies": {
+    "request": "^2.81.0",
+    "request-promise-native": "^1.0.3"
+  },
   "devDependencies": {
-    "chai": "^1.8.1",
+    "chai": "3",
     "dirty-chai": "^1.2.2",
-    "mocha": "~3.2.0",
+    "jsdoc-to-markdown": "^3.0.0",
+    "mocha": "^3.3.0",
+    "nock": "^9.0.13",
     "nyc": "^10.1.2",
-    "semistandard": "*",
-    "jsdoc-to-markdown":"~2.0.1"
+    "semistandard": "*"
   },
   "keywords": [],
   "nyc": {
-    "exclude": [ "coverage", "test" ]
+    "exclude": [
+      "coverage",
+      "test"
+    ]
   }
 }
