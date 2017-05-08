@@ -18,7 +18,7 @@ module.exports = function (config, name, tags) {
     auth: { username: config.email, password: config.token },
     json: true,
     body
-  }).then(function (response) {
-    console.log('response', response);
+  }).catch(function (err) {
+    console.error('librato error', err);
   });
 };
