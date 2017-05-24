@@ -13,7 +13,7 @@ this - repeat it does one request to librato per call.
 
 ```js
 const librato = require('librato-simple');
-const config = { email: 'me@my.com, token: 'librato_token' };
+const config = { email: 'me@my.com', token: 'librato_token' };
 librato(config, 'mymetric.awesome', { color: 'blue', machine: 'thing' }).then(function () {
   // we're done, defaults to value of 1 ...
 });
