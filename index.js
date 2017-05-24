@@ -6,7 +6,8 @@ const endpoint = 'https://metrics-api.librato.com/v1/measurements';
  * config: { username, password }
  * tags: Whatever you want.
  */
-module.exports = function (config, name, tags, value = 1) {
+module.exports = function (config, name, tags, value) {
+  value = value !== undefined ? value : 1;
   if (!config || !config.email || !config.token) return Promise.resolve();
   const body = {
     measurements: [
