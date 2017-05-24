@@ -2,15 +2,15 @@ const request = require('request-promise-native');
 const endpoint = 'https://metrics-api.librato.com/v1/measurements';
 
 /**
- * Increment metric with given name by 1.
+ * Submit metric with given name and value ( or 1 if omitted).
  * config: { username, password }
  * tags: Whatever you want.
  */
-module.exports = function (config, name, tags) {
+module.exports = function (config, name, tags, value = 1) {
   if (!config || !config.email || !config.token) return Promise.resolve();
   const body = {
     measurements: [
-      { name, value: 1, tags }
+      { name, value, tags }
     ]
   };
 
