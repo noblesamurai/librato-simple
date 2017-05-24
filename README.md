@@ -4,18 +4,18 @@
 
 ## Purpose
 The existing librato modules do not seem to support tags.  This is a currently
-a minimum viable product implementation of incrementing  metric using gauges
+a minimum viable product implementation of posting a metric using gauges
 with custom tags.  (It does no aggregation and makes one
-requests per metric increment). Watch out for costs on your account if you use
-this - repeat it does on request to librato per call.
+requests per call). Watch out for costs on your account if you use
+this - repeat it does one request to librato per call.
 
 ## Usage
 
 ```js
-const increment = require('librato-simple');
+const librato = require('librato-simple');
 const config = { email: 'me@my.com, token: 'librato_token' };
-increment(config, 'mymetric.awesome', { color: 'blue', machine: 'thing' }).then(function () {
-  // we're done ...
+librato(config, 'mymetric.awesome', { color: 'blue', machine: 'thing' }).then(function () {
+  // we're done, defaults to value of 1 ...
 });
 
 ```
@@ -27,10 +27,11 @@ increment(config, 'mymetric.awesome', { color: 'blue', machine: 'thing' }).then(
  * @param {Object} config - { email, token }
  * @param {string} name - the name of your metric
  * @param {Object} tags - { /* your tags */ }
+ * @param {Number} value - The value to submit
  * @resolves {Promise}
  */
 
-module.exports = increment(config, name, tags).then(function () {
+librato(config, name, tags, value) => Promise
 ```
 
 
