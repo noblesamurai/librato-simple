@@ -33,9 +33,11 @@
     "dirty-chai": "^1.2.2",
     "jsdoc-to-markdown": "^3.0.0",
     "mocha": "^3.3.0",
-    "nock": "^9.0.13",
     "nyc": "^10.1.2",
-    "semistandard": "*"
+    "proxyquire": "^1.8.0",
+    "semistandard": "*",
+    "sinon": "^4.4.2",
+    "sinon-chai": "^2.14.0"
   },
   "keywords": [],
   "nyc": {

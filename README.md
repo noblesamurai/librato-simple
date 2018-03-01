@@ -3,37 +3,64 @@
 > Simple metrics posting to librato.
 
 ## Purpose
-The existing librato modules do not seem to support tags.  This is a currently
-a minimum viable product implementation of posting a metric using gauges
-with custom tags.  (It does no aggregation and makes one
-requests per call). Watch out for costs on your account if you use
-this - repeat it does one request to librato per call.
+The existing librato modules do not seem to support tags.
 
 ## Usage
 
 ```js
-const librato = require('librato-simple');
-const config = { email: 'me@my.com', token: 'librato_token' };
-librato(config, 'mymetric.awesome', { color: 'blue', machine: 'thing' }).then(function () {
-  // we're done, defaults to value of 1 ...
-});
+const config = {
+  email: 'me@my.com',
+  token: 'librato_token',
+  debounceTime: 1000,
+  limit: 500
+};
+const librato = require('librato-simple')(config);
 
+librato.queue('some.metric', { color: 'blue', machine: 'thing' });
+librato.queue('some.other.metric', { color: 'blue', machine: 'thing' });
+
+// These messages will be queued and sent out after `debounceTime`.
+// If you want to force all the messages currently queued to be sent...
+librato.send().then(function () {
+  // all queued messages should have been sent now.
+});
 ```
 
 ## API
 
-```js
-/**
- * @param {Object} config - { email, token }
- * @param {string} name - the name of your metric
- * @param {Object} tags - { /* your tags */ }
- * @param {Number} value - The value to submit
- * @resolves {Promise}
- */
+### Setup
 
-librato(config, name, tags, value) => Promise
+```js
+const librato = require('librato-simple')(config);
 ```
 
+Options:
+* `email` and `token` -- required auth parameters. Without these being set all
+  calls to `.queue()` or `.send()` will do nothing.
+* `debounceTime` -- how long to wait after the last measurement is queued
+  before all queued measurements are sent.
+* `limit` -- the maximum number of measurements to queue before it is sent
+  without any further delay.
+
+### Queue measurements to be sent
+
+```js
+librato.queue(name, tags, value);
+```
+
+Variables:
+* `name` -- the name of the metric/measurement you are recording.
+* `tags` -- an array of whatever tags to be attached to this measurement.
+* `value` -- the value of this measurement (defaults to `1`).
+
+### Force all remaining messages to be sent
+
+```js
+librato.send().then(function () { /* ... */ });
+```
+
+This flushes the queued measurements and returns a promise that will resolve
+once all measurements have been sent.
 
 ## Installation
 
