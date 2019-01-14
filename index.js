@@ -1,6 +1,11 @@
 const request = require('request-promise-native');
 const endpoint = 'https://metrics-api.librato.com/v1/measurements';
 
+function parsePrefix (prefix) {
+  if (!prefix || !prefix.length) return '';
+  return prefix.replace(/\.$/, '') + '.';
+}
+
 module.exports = function librato (config = {}) {
   const {
     email: username,
@@ -8,6 +13,7 @@ module.exports = function librato (config = {}) {
     debounceTime = 1000,
     limit = 500
   } = config;
+  const prefix = parsePrefix(config.prefix);
   const auth = username && password && { username, password };
   const measurements = [];
   let sendTimeout;
@@ -21,7 +27,7 @@ module.exports = function librato (config = {}) {
   const queue = (name, tags, value = 1) => {
     // don't queue anything if we don't have any auth info to send it with.
     if (!auth) return;
-    measurements.push({ name, value, tags });
+    measurements.push({ name: `${prefix}${name}`, value, tags });
     sendDelayed();
   };
 

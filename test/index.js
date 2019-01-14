@@ -43,6 +43,27 @@ describe('librato', function () {
     });
   });
 
+  it('should send a prefixed message', function () {
+    const post = sinon.stub().resolves();
+    const prefix = 'prefix';
+    const librato = proxyquire('..', { 'request-promise-native': { post } })({ email, token, prefix });
+    const name = 'test.metric';
+    const tags = { tag: 'something' };
+    const value = 42;
+    librato.queue(name, tags, value);
+    return librato.send().then(() => {
+      expect(post).to.have.been.called();
+      expect(post).to.have.been.calledWith(
+        'https://metrics-api.librato.com/v1/measurements',
+        sinon.match({
+          auth: { username: email, password: token },
+          json: true,
+          body: { measurements: [{ name: `${prefix}.${name}`, tags, value }] }
+        })
+      );
+    });
+  });
+
   it('should send a queued message with a default value of 1', function () {
     const post = sinon.stub().resolves();
     const librato = proxyquire('..', { 'request-promise-native': { post } })({ email, token });
