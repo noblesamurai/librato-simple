@@ -189,7 +189,7 @@ describe('librato', function () {
       { name: 'test.metric', tags: { b: 8 }, value: 2 }
     ];
 
-    const [ first, ...rest ] = measurements;
+    const [first, ...rest] = measurements;
     librato.queue(first.name, first.tags, first.value);
 
     // start the send...
@@ -200,7 +200,7 @@ describe('librato', function () {
       sinon.match({
         auth: { username: email, password: token },
         json: true,
-        body: { measurements: [ first ] }
+        body: { measurements: [first] }
       })
     );
 
