@@ -21,7 +21,7 @@
     "url": "https://github.com/noblesamurai/librato-simple/issues"
   },
   "engines": {
-    "node": ">= 4.x",
+    "node": ">= 8.x",
     "npm": "3.x"
   },
   "dependencies": {
