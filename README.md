@@ -37,12 +37,12 @@ const librato = require('librato-simple')(config);
 ```
 
 Options:
-* `email` and `token` -- required auth parameters. Without these being set all
+* `email` and `token`: required auth parameters. Without these being set all
   calls to `.queue()` or `.send()` will do nothing.
-* `prefix` -- a prefix to be added to all measurement names.
-* `debounceTime` -- how long to wait after the last measurement is queued
-  before all queued measurements are sent.
-* `limit` -- the maximum number of measurements to queue before it is sent
+* `prefix`: a prefix to be added to all measurement names.
+* `debounceTime` (default: 1s): how long to wait after the last measurement 
+   is queued before all queued measurements are sent.
+* `limit`: the maximum number of measurements to queue before it is sent
   without any further delay.
 
 ### Queue measurements to be sent
