@@ -1,4 +1,4 @@
-# Librato-simple [![Build Status](https://secure.travis-ci.org/noblesamurai/librato-simple.png?branch=master)](http://travis-ci.org/noblesamurai/librato-simple) [![NPM version](https://badge-me.herokuapp.com/api/npm/librato-simple.png)](http://badges.enytc.com/for/npm/librato-simple)
+# Librato-simple [![Build Status](https://secure.travis-ci.org/noblesamurai/librato-simple.png?branch=master)](http://travis-ci.org/noblesamurai/librato-simple) [![npm version](https://badge.fury.io/js/librato-simple.svg)](https://badge.fury.io/js/librato-simple)
 
 > Simple metrics posting to librato.
 
