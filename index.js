@@ -1,5 +1,6 @@
-const request = require('request-promise-native');
+const debug = require('debug')('librato-simple');
 const endpoint = 'https://metrics-api.librato.com/v1/measurements';
+const request = require('request-promise-native');
 
 function parsePrefix (prefix) {
   if (!prefix || !prefix.length) return '';
@@ -25,6 +26,7 @@ module.exports = function librato (config = {}) {
    * @param {*} value
    */
   const queue = (name, tags, value = 1) => {
+    debug('queue()', { name, tags, value });
     // don't queue anything if we don't have any auth info to send it with.
     if (!auth) return;
     measurements.push({ name: `${prefix}${name}`, value, tags });
@@ -38,10 +40,12 @@ module.exports = function librato (config = {}) {
    *   debounced still.
    */
   const send = (debounce = false) => {
+    debug('send()', { debounce });
     // stop if no auth or if there is nothing to send.
     if (!auth || !measurements.length) return Promise.resolve();
     const body = { measurements: measurements.splice(0, limit) };
     return request.post(endpoint, { auth, json: true, body }).then(() => {
+      debug('send() - success');
       return debounce ? sendDelayed() : send();
     }).catch(function (err) {
       console.error('librato error', err);
