@@ -1,7 +1,7 @@
 {
   "name": "librato-simple",
   "description": "Simple metrics posting to librato.",
-  "version": "3.1.0",
+  "version": "3.1.1",
   "author": "Tim Allen <tim@noblesamurai.com>",
   "license": "BSD",
   "main": "index.js",
